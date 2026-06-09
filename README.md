@@ -14,4 +14,9 @@ Jenis Graph: Weighted Directed Graph (Berbobot dan Berarah), karena jalanan di d
 
 Bobot (Weight): Jarak (km) dan kemacetan (waktu tempuh dalam menit).  
 
+# Algoritma yang digunakan
+
+Algoritma Dijkstra: Digunakan untuk mencari lintasan terpendek (shortest path) dari lokasi driver ke pelanggan, lalu ke tujuan dengan total bobot (jarak/waktu) terkecil. 
+
+Kompleksitas: $O((V + E) \log V)$ jika diimplementasikan dengan Min-Priority Queue (sangat efisien untuk map perkotaan).
 
