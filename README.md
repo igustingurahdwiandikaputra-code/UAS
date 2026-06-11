@@ -200,10 +200,6 @@ flowchart TD
 
 ## 3.4 Use Case
 
-### Aktor
-
-Pasien
-
 ### Use Case Diagram
 
 ```mermaid
@@ -225,7 +221,7 @@ flowchart LR
     User --> UC6
 ```
 
-### Struktur Graph
+### 3.5 Struktur Graph
 
 ```mermaid
 graph LR
