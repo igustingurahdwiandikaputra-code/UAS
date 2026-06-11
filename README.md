@@ -161,31 +161,16 @@ Bobot:
 
 ```mermaid
 flowchart TD
-
-    A([Mulai])
-    B[Input Keluhan Pasien]
-    C[Input Lokasi Awal]
-    D[Menentukan Spesialis]
-    E[Filter Rumah Sakit Berdasarkan Spesialis]
-    F[Hitung Skor Ranking]
-    G[Pilih Rumah Sakit Terbaik]
-    H[Jalankan Algoritma Dijkstra]
-    I[Hitung Jalur Terpendek]
-    J[Tampilkan Peta dan Rute]
-    K[Tampilkan Centrality]
-    L([Selesai])
-
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-    H --> I
-    I --> J
-    J --> K
-    K --> L
+    A[Mulai] --> B[Pilih Keluhan]
+    B --> C[Tentukan Spesialis]
+    C --> D[Ambil Data Rumah Sakit]
+    D --> E[Hitung Skor]
+    E --> F[Urutkan Ranking]
+    F --> G[Tentukan Rumah Sakit Terbaik]
+    G --> H[Jalankan Dijkstra]
+    H --> I[Tampilkan Rute]
+    I --> J[Tampilkan Peta]
+    J --> K[Selesai]
 ```
 ### 3.3 Flowchart Algoritma Dijkstra
 
@@ -223,16 +208,14 @@ Pasien
 
 ```mermaid
 flowchart LR
-
     User((Pasien))
 
-    UC1([Memilih Keluhan])
-    UC2([Memilih Lokasi Awal])
-    UC3([Mencari Rumah Sakit])
-    UC4([Melihat Rekomendasi])
-    UC5([Melihat Rute Terpendek])
-    UC6([Melihat Degree Centrality])
-    UC7([Melihat Visualisasi Graph])
+    UC1[Input Keluhan]
+    UC2[Pilih Lokasi]
+    UC3[Lihat Rekomendasi]
+    UC4[Lihat Rute Dijkstra]
+    UC5[Lihat Peta]
+    UC6[Lihat Centrality]
 
     User --> UC1
     User --> UC2
@@ -240,7 +223,6 @@ flowchart LR
     User --> UC4
     User --> UC5
     User --> UC6
-    User --> UC7
 ```
 
 ### Struktur Graph
