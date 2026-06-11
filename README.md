@@ -157,7 +157,7 @@ Bobot:
 
 ---
 
-### Flowchart Sistem
+### 3.3 Flowchart Sistem
 
 ```mermaid
 flowchart TD
@@ -172,7 +172,7 @@ flowchart TD
     I --> J[Tampilkan Peta]
     J --> K[Selesai]
 ```
-### 3.3 Flowchart Algoritma Dijkstra
+### 3.4 Flowchart Algoritma Dijkstra
 
 ```mermaid
 flowchart TD
@@ -198,10 +198,7 @@ flowchart TD
     H --> I
 ```
 
-## 3.4 Use Case
-
-### Use Case Diagram
-
+### 3.5 Use Case Diagram
 ```mermaid
 flowchart LR
     User((Pasien))
