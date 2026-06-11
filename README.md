@@ -1,295 +1,338 @@
-# LAPORAN UJIAN AKHIR SEMESTER
+# UAS Struktur Data Graph
 
-# SISTEM PENDUKUNG KEPUTUSAN (DSS) REKOMENDASI RUMAH SAKIT DI BALI MENGGUNAKAN ALGORITMA GRAPH
+# Decision Support System (DSS) Rekomendasi Rumah Sakit di Bali
 
----
+## BAB 1 – PENDAHULUAN
 
-# BAB I – PENDAHULUAN
+### 1.1 Latar Belakang
 
-## 1.1 Latar Belakang
+Pemilihan rumah sakit yang tepat merupakan hal penting dalam pelayanan kesehatan. Pasien sering mengalami kesulitan menentukan rumah sakit yang sesuai dengan kebutuhan medis, jarak tempuh, serta kualitas pelayanan yang tersedia.
 
-Perkembangan teknologi informasi telah mendorong pemanfaatan sistem komputer dalam membantu proses pengambilan keputusan pada berbagai bidang, termasuk bidang kesehatan. Salah satu permasalahan yang sering dihadapi masyarakat adalah menentukan rumah sakit yang paling sesuai berdasarkan kebutuhan medis, lokasi, dan fasilitas yang tersedia.
+Perkembangan teknologi memungkinkan penerapan Decision Support System (DSS) untuk membantu pengambilan keputusan secara cepat dan objektif. Dalam penelitian ini dibangun sebuah DSS rekomendasi rumah sakit di Bali menggunakan struktur data Graph dan algoritma Dijkstra untuk menentukan rute terbaik menuju rumah sakit yang direkomendasikan.
 
-Dalam kondisi tertentu, pasien membutuhkan informasi yang cepat mengenai rumah sakit yang memiliki spesialis sesuai dengan keluhan yang dialami. Selain itu, faktor jarak dan akses menuju rumah sakit juga menjadi pertimbangan penting.
+Selain itu, sistem juga memanfaatkan Degree Centrality untuk menganalisis tingkat keterhubungan antar rumah sakit serta menggunakan pendekatan rekomendasi spesialis berdasarkan keluhan pasien.
 
-Untuk mengatasi permasalahan tersebut, dibuat sebuah Sistem Pendukung Keputusan (Decision Support System/DSS) yang mampu memberikan rekomendasi rumah sakit terbaik di Bali dengan memanfaatkan struktur data graph dan algoritma pencarian jalur terpendek. Sistem ini menggunakan data rumah sakit, spesialisasi dokter, rating rumah sakit, serta hubungan antar lokasi untuk menghasilkan rekomendasi yang optimal.
+### 1.2 Rumusan Masalah
 
----
+1. Bagaimana membangun sistem rekomendasi rumah sakit berbasis graph?
+2. Bagaimana menentukan rute terpendek menuju rumah sakit yang direkomendasikan?
+3. Bagaimana menganalisis keterhubungan rumah sakit menggunakan centrality?
+4. Bagaimana memberikan rekomendasi rumah sakit berdasarkan spesialis yang dibutuhkan pasien?
 
-## 1.2 Rumusan Masalah
+### 1.3 Tujuan
 
-Berdasarkan latar belakang di atas, rumusan masalah dalam penelitian ini adalah:
+1. Membangun DSS rekomendasi rumah sakit berbasis graph.
+2. Mengimplementasikan algoritma Dijkstra untuk pencarian rute terpendek.
+3. Mengimplementasikan Degree Centrality untuk analisis node.
+4. Menampilkan hasil rekomendasi dalam bentuk visualisasi interaktif.
 
-1. Bagaimana membangun sistem pendukung keputusan untuk rekomendasi rumah sakit di Bali?
-2. Bagaimana menerapkan struktur data graph dalam pemodelan lokasi rumah sakit?
-3. Bagaimana menggunakan algoritma graph untuk menentukan jalur terpendek menuju rumah sakit?
-4. Bagaimana memberikan rekomendasi rumah sakit berdasarkan kebutuhan pasien?
+### 1.4 Manfaat
 
----
+#### Bagi Pasien
 
-## 1.3 Tujuan
+* Membantu memilih rumah sakit yang sesuai kebutuhan.
+* Memperoleh informasi rute menuju rumah sakit.
 
-Tujuan dari pembuatan sistem ini adalah:
+#### Bagi Akademik
 
-1. Membangun aplikasi DSS rekomendasi rumah sakit berbasis Python.
-2. Mengimplementasikan struktur data graph dalam representasi lokasi rumah sakit.
-3. Mengimplementasikan algoritma Dijkstra untuk pencarian jalur terpendek.
-4. Memberikan rekomendasi rumah sakit berdasarkan spesialis yang dibutuhkan pasien.
+* Sebagai implementasi struktur data graph dalam kasus nyata.
+* Sebagai contoh penerapan DSS menggunakan algoritma graph.
 
----
+#### Bagi Pengembang
 
-## 1.4 Manfaat
-
-Manfaat yang diperoleh dari sistem ini adalah:
-
-### Bagi Pengguna
-
-* Membantu menemukan rumah sakit yang sesuai dengan kebutuhan.
-* Menghemat waktu dalam mencari layanan kesehatan.
-
-### Bagi Akademik
-
-* Sebagai implementasi nyata struktur data graph.
-* Sebagai penerapan konsep DSS dalam bidang kesehatan.
-
-### Bagi Pengembang
-
-* Menambah pengalaman dalam pengembangan aplikasi berbasis data dan graph.
+* Menjadi dasar pengembangan sistem kesehatan berbasis GIS dan AI.
 
 ---
 
-# BAB II – DASAR TEORI
+# BAB 2 – DASAR TEORI
 
 ## 2.1 Struktur Data Graph
 
-Graph merupakan struktur data yang terdiri dari kumpulan simpul (vertex/node) dan hubungan antar simpul (edge).
+Graph merupakan struktur data yang terdiri dari:
 
-Secara matematis graph dapat dituliskan:
+### Node (Vertex)
 
-G = (V, E)
-
-Keterangan:
-
-* V = himpunan vertex/node
-* E = himpunan edge
+Merepresentasikan objek.
 
 Pada sistem ini:
 
-* Node merepresentasikan lokasi dan rumah sakit.
-* Edge merepresentasikan hubungan atau jalur antar lokasi.
+* Lokasi pasien
+* Rumah sakit
+
+### Edge
+
+Merepresentasikan hubungan antar node.
+
+Contoh:
+
+Denpasar → RSUP Sanglah = 3 km
+
+### Weighted Graph
+
+Setiap edge memiliki bobot berupa jarak tempuh.
 
 ---
 
 ## 2.2 Decision Support System (DSS)
 
-Decision Support System (DSS) adalah sistem informasi yang digunakan untuk membantu proses pengambilan keputusan dengan memanfaatkan data, model, dan metode analisis.
+Decision Support System adalah sistem yang membantu pengguna dalam proses pengambilan keputusan berdasarkan data dan model tertentu.
 
-Karakteristik DSS:
+Pada sistem ini DSS digunakan untuk:
 
-* Mendukung keputusan semi-terstruktur.
-* Memanfaatkan data dan model analisis.
-* Memberikan alternatif solusi terbaik.
-
-Pada sistem ini DSS digunakan untuk menentukan rumah sakit yang paling sesuai berdasarkan:
-
-* Keluhan pasien
-* Jarak
-* Rating rumah sakit
-* Ketersediaan spesialis
+* Menentukan rumah sakit terbaik.
+* Menentukan spesialis yang sesuai.
+* Menentukan rute terpendek menuju rumah sakit.
 
 ---
 
-## 2.3 Algoritma Graph yang Digunakan
+## 2.3 Algoritma Dijkstra
 
-### Algoritma Dijkstra
+Algoritma Dijkstra digunakan untuk mencari lintasan terpendek dari node sumber menuju node tujuan.
 
-Algoritma Dijkstra digunakan untuk menentukan jalur terpendek dari satu node ke node lain pada graph berbobot.
-
-Langkah kerja:
+Langkah-langkah:
 
 1. Tentukan node awal.
-2. Beri nilai 0 pada node awal dan tak hingga pada node lain.
-3. Pilih node dengan jarak minimum.
-4. Perbarui jarak tetangga.
-5. Ulangi hingga mencapai node tujuan.
+2. Beri nilai 0 pada node awal.
+3. Beri nilai tak hingga pada node lain.
+4. Pilih node dengan jarak terkecil.
+5. Perbarui jarak tetangga.
+6. Ulangi sampai tujuan ditemukan.
 
-Keunggulan:
+Kelebihan:
 
-* Efisien untuk graph berbobot positif.
-* Menjamin solusi optimal.
+* Cepat.
+* Cocok untuk graph berbobot positif.
 
 ---
 
-### Degree Centrality
+## 2.4 Degree Centrality
 
-Degree Centrality digunakan untuk mengetahui tingkat keterhubungan suatu node.
+Degree Centrality digunakan untuk mengukur tingkat keterhubungan suatu node.
 
 Rumus:
 
-CD(v) = deg(v) / (n − 1)
+Centrality(v) = Degree(v) / (n - 1)
 
-Semakin besar nilainya maka semakin penting posisi node tersebut dalam graph.
+Semakin tinggi nilai centrality, semakin penting posisi node dalam jaringan.
 
 ---
 
-# BAB III – ANALISIS DAN PERANCANGAN
+# BAB 3 – ANALISIS DAN PERANCANGAN
 
 ## 3.1 Analisis Masalah
 
-Masalah utama yang dihadapi pengguna adalah menentukan rumah sakit yang sesuai dengan kondisi pasien dan memiliki akses tercepat dari lokasi pengguna.
+Pasien membutuhkan informasi:
 
-Solusi yang dirancang adalah sistem yang:
+* Rumah sakit yang sesuai spesialis.
+* Rumah sakit dengan kualitas terbaik.
+* Jalur tercepat menuju rumah sakit.
 
-1. Menerima input keluhan pengguna.
-2. Menentukan spesialis yang dibutuhkan.
-3. Menyeleksi rumah sakit yang memiliki spesialis tersebut.
-4. Menghitung rekomendasi berdasarkan rating dan jarak.
-5. Menampilkan jalur terpendek menuju rumah sakit.
+Permasalahan tersebut dapat dimodelkan menggunakan graph.
 
 ---
 
 ## 3.2 Desain Graph
 
-Representasi graph:
-
 Node:
 
-* Lokasi pengguna
-* Rumah sakit
+* Denpasar
+* Kuta
+* Sanur
+* Ubud
+* Jimbaran
+* Nusa Dua
+* RSUP Sanglah
+* RS BaliMed
+* RS Kasih Ibu
+* RS Surya Husadha
 
 Edge:
 
-* Jalur antar lokasi
-* Bobot berupa jarak
+* Menghubungkan lokasi dan rumah sakit.
+* Menghubungkan rumah sakit satu sama lain.
 
-Contoh:
+Bobot:
 
-Lokasi A → RSUP Sanglah = 5 km
-
-Lokasi A → RS BaliMed = 8 km
-
-Lokasi A → RS Kasih Ibu = 6 km
+* Jarak dalam kilometer.
 
 ---
 
-## 3.3 Flowchart
+### Flowchart Sistem
 
-Alur sistem:
+```mermaid
+flowchart TD
 
-Start
+    A([Mulai])
+    B[Input Keluhan Pasien]
+    C[Input Lokasi Awal]
+    D[Menentukan Spesialis]
+    E[Filter Rumah Sakit Berdasarkan Spesialis]
+    F[Hitung Skor Ranking]
+    G[Pilih Rumah Sakit Terbaik]
+    H[Jalankan Algoritma Dijkstra]
+    I[Hitung Jalur Terpendek]
+    J[Tampilkan Peta dan Rute]
+    K[Tampilkan Centrality]
+    L([Selesai])
 
-↓
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    J --> K
+    K --> L
+```
+### 3.3 Flowchart Algoritma Dijkstra
 
-Input Keluhan
+```mermaid
+flowchart TD
 
-↓
+    A([Mulai])
+    B[Masukkan Node Awal]
+    C[Set Jarak Awal = 0]
+    D[Set Node Lain = Tak Hingga]
+    E[Pilih Node dengan Jarak Minimum]
+    F[Perbarui Jarak Tetangga]
+    G{Tujuan Ditemukan?}
+    H[Bangun Jalur Terpendek]
+    I([Selesai])
 
-Tentukan Spesialis
-
-↓
-
-Cari Rumah Sakit Sesuai
-
-↓
-
-Hitung Skor Rekomendasi
-
-↓
-
-Hitung Jalur Terpendek (Dijkstra)
-
-↓
-
-Tampilkan Hasil
-
-↓
-
-End
-
----
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    G -- Tidak --> E
+    G -- Ya --> H
+    H --> I
+```
 
 ## 3.4 Use Case
 
 ### Aktor
 
-Pengguna
+Pasien
 
-### Use Case
+### Use Case Diagram
 
-1. Memasukkan keluhan.
-2. Memilih lokasi awal.
-3. Melihat rekomendasi rumah sakit.
-4. Melihat rute terpendek.
-5. Melihat analisis graph.
+```mermaid
+flowchart LR
 
----
+    User((Pasien))
 
-## 3.5 Struktur Node dan Edge
+    UC1([Memilih Keluhan])
+    UC2([Memilih Lokasi Awal])
+    UC3([Mencari Rumah Sakit])
+    UC4([Melihat Rekomendasi])
+    UC5([Melihat Rute Terpendek])
+    UC6([Melihat Degree Centrality])
+    UC7([Melihat Visualisasi Graph])
 
-### Node
+    User --> UC1
+    User --> UC2
+    User --> UC3
+    User --> UC4
+    User --> UC5
+    User --> UC6
+    User --> UC7
+```
 
-| Node             | Keterangan      |
-| ---------------- | --------------- |
-| User             | Lokasi pengguna |
-| RSUP Sanglah     | Rumah sakit     |
-| RS BaliMed       | Rumah sakit     |
-| RS Kasih Ibu     | Rumah sakit     |
-| RS Surya Husadha | Rumah sakit     |
+### Struktur Graph
 
-### Edge
+```mermaid
+graph LR
 
-| Asal | Tujuan           | Bobot |
-| ---- | ---------------- | ----- |
-| User | RSUP Sanglah     | Jarak |
-| User | RS BaliMed       | Jarak |
-| User | RS Kasih Ibu     | Jarak |
-| User | RS Surya Husadha | Jarak |
+    Denpasar --- RSUPSanglah
+    Denpasar --- RSBaliMed
 
----
+    Kuta --- RSBaliMed
+    Kuta --- RSKasihIbu
 
-# BAB IV – IMPLEMENTASI
+    Sanur --- RSUPSanglah
+
+    Ubud --- RSKasihIbu
+
+    Jimbaran --- RSBaliMed
+    Jimbaran --- RSSuryaHusadha
+
+    NusaDua --- RSUPSanglah
+    NusaDua --- RSBaliMed
+
+    RSUPSanglah --- RSBaliMed
+    RSUPSanglah --- RSKasihIbu
+
+    RSBaliMed --- RSKasihIbu
+    RSBaliMed --- RSSuryaHusadha
+
+    RSKasihIbu --- RSSuryaHusadha
+```
+
+# BAB 4 – IMPLEMENTASI
 
 ## 4.1 Implementasi Program
 
-Program dikembangkan menggunakan:
+Bahasa Pemrograman:
 
 * Python
+
+Framework:
+
 * Streamlit
-* NetworkX
+
+Library:
+
 * Pandas
+* NetworkX
 * Folium
-
-Modul utama:
-
-* app.py
-* dijkstra.py
-* graph_data.py
-* ai_recommendation.py
-* centrality.py
+* Matplotlib
 
 ---
 
 ## 4.2 Penjelasan Kode
 
-### Modul Dijkstra
+### graph_data.py
 
-Fungsi:
+Berfungsi menyimpan:
 
-* Menghitung jalur terpendek.
-* Menentukan total jarak minimum.
+* Data rumah sakit
+* Struktur graph
 
 Output:
 
-* Jalur terbaik.
-* Total biaya/jarak.
+graph dan dataframe.
 
 ---
 
-### Modul Recommendation
+### dijkstra.py
 
-Fungsi:
+Mengimplementasikan algoritma Dijkstra untuk mencari jalur terpendek.
 
-* Mengubah keluhan menjadi spesialis.
+Output:
+
+* Cost
+* Path
+
+---
+
+### centrality.py
+
+Menghitung Degree Centrality setiap node.
+
+Output:
+
+Nilai centrality seluruh node.
+
+---
+
+### ai_recommendation.py
+
+Mengubah keluhan pasien menjadi spesialis yang sesuai.
 
 Contoh:
 
@@ -299,33 +342,49 @@ Sesak Nafas → Paru
 
 ---
 
-### Modul Centrality
+### app.py
 
-Fungsi:
+Merupakan antarmuka utama aplikasi.
 
-* Menghitung degree centrality setiap node.
+Fitur:
 
-Tujuan:
-
-* Mengetahui node yang paling strategis dalam jaringan.
+* Input pasien
+* Ranking rumah sakit
+* Visualisasi peta
+* Visualisasi graph
+* Analisis centrality
 
 ---
 
 ## 4.3 Tampilan Sistem
 
-Tampilan aplikasi terdiri dari:
+### Halaman Utama
 
-1. Halaman input keluhan.
-2. Halaman rekomendasi rumah sakit.
-3. Visualisasi peta rumah sakit.
-4. Analisis graph.
-5. Jalur terpendek menggunakan Dijkstra.
+Menampilkan:
 
-(Sisipkan screenshot aplikasi pada bagian ini.)
+* Input keluhan
+* Lokasi pasien
+* Tombol pencarian
+
+### Peta Interaktif
+
+Menampilkan:
+
+* Lokasi rumah sakit
+* Lokasi pasien
+* Rute rekomendasi
+
+### Visualisasi Graph
+
+Menampilkan node dan edge graph menggunakan NetworkX.
+
+### Tabel Centrality
+
+Menampilkan tingkat keterhubungan setiap rumah sakit.
 
 ---
 
-# BAB V – PENGUJIAN DAN ANALISIS
+# BAB 5 – PENGUJIAN DAN ANALISIS
 
 ## 5.1 Skenario Pengujian
 
@@ -335,13 +394,15 @@ Input:
 
 Keluhan = Nyeri Dada
 
-Output yang diharapkan:
+Lokasi = Denpasar
 
-Rumah sakit dengan spesialis jantung muncul sebagai rekomendasi.
+Output:
 
-Status:
+Spesialis = Jantung
 
-Berhasil.
+Rekomendasi Rumah Sakit = RSUP Sanglah
+
+Status = Berhasil
 
 ---
 
@@ -349,26 +410,29 @@ Berhasil.
 
 Input:
 
-Lokasi pengguna → RSUP Sanglah
+Keluhan = Sesak Nafas
+
+Lokasi = Kuta
 
 Output:
 
-Jalur terpendek berhasil dihitung.
+Spesialis = Paru
 
-Status:
+Rekomendasi Rumah Sakit = RS BaliMed
 
-Berhasil.
+Status = Berhasil
 
 ---
 
 ## 5.2 Analisis Hasil
 
-Hasil pengujian menunjukkan bahwa:
+Sistem berhasil:
 
-* Sistem mampu memfilter rumah sakit berdasarkan spesialis.
-* Algoritma Dijkstra berhasil menentukan jalur minimum.
-* Degree Centrality berhasil mengidentifikasi node penting dalam graph.
-* Dashboard dapat menampilkan hasil secara interaktif.
+* Menentukan spesialis berdasarkan keluhan.
+* Memberikan ranking rumah sakit.
+* Menampilkan rute terpendek.
+* Menampilkan visualisasi graph.
+* Menampilkan analisis centrality.
 
 ---
 
@@ -378,45 +442,38 @@ Hasil pengujian menunjukkan bahwa:
 
 Kompleksitas waktu:
 
+O(V²)
+
+atau
+
 O((V + E) log V)
 
-Keterangan:
-
-* V = jumlah node
-* E = jumlah edge
+jika menggunakan priority queue.
 
 ### Degree Centrality
 
-Kompleksitas waktu:
+Kompleksitas:
 
 O(V + E)
 
-Karena setiap node dan edge dihitung satu kali.
+karena seluruh node dan edge diperiksa satu kali.
 
 ---
 
-# BAB VI – KESIMPULAN
+# BAB 6 – KESIMPULAN
 
 ## 6.1 Kesimpulan
 
-Berdasarkan hasil implementasi dan pengujian, dapat disimpulkan bahwa:
-
-1. Sistem pendukung keputusan berhasil dibangun menggunakan Python dan Streamlit.
-2. Struktur data graph mampu merepresentasikan hubungan antar lokasi dan rumah sakit.
-3. Algoritma Dijkstra berhasil menentukan jalur terpendek menuju rumah sakit.
-4. Sistem dapat memberikan rekomendasi rumah sakit sesuai kebutuhan pasien.
-5. Visualisasi graph dan peta membantu pengguna memahami hasil rekomendasi dengan lebih baik.
-
----
+1. Struktur data graph berhasil diterapkan pada sistem rekomendasi rumah sakit.
+2. Algoritma Dijkstra berhasil menentukan rute terpendek menuju rumah sakit tujuan.
+3. Degree Centrality dapat digunakan untuk menganalisis tingkat keterhubungan rumah sakit.
+4. Sistem DSS mampu membantu pengguna memilih rumah sakit berdasarkan spesialis, rating, dan jarak.
 
 ## 6.2 Saran Pengembangan
 
-Beberapa pengembangan yang dapat dilakukan pada penelitian selanjutnya:
-
-1. Menambahkan data rumah sakit yang lebih lengkap.
-2. Mengintegrasikan GPS secara real-time.
-3. Menambahkan algoritma Multi Criteria Decision Making (MCDM).
-4. Menggunakan data lalu lintas aktual untuk perhitungan rute.
-5. Mengembangkan aplikasi ke platform mobile Android dan iOS.
-
----
+1. Menambahkan data rumah sakit yang lebih banyak.
+2. Menggunakan data GPS secara real-time.
+3. Mengintegrasikan Google Maps API.
+4. Menambahkan algoritma A* untuk optimasi rute.
+5. Menambahkan Machine Learning untuk rekomendasi yang lebih akurat.
+6. Menambahkan estimasi waktu berdasarkan kondisi lalu lintas.
